@@ -11,10 +11,10 @@ export const vendors = [
 export const products = [
   {
     id: "luna-solitaire",
-    name: "Gold Engagement Ring Set",
+    name: "Radiant Cut Diamond Ring with Tapered Baguettes",
     vendorId: "don",
     category: "engagement-rings",
-    basePrice: 4200,
+    basePrice: 1900,
     image: "/assets/engagement-ring-feature.png",
     alt: "Radiant diamond engagement ring on hand"
   },
@@ -50,7 +50,7 @@ export const products = [
     name: "Silver Cross Chain",
     vendorId: "don",
     category: "chains",
-    basePrice: 1650,
+    basePrice: 925,
     image: "/assets/silver-cross-chain.png",
     alt: "Silver cross pendant and chain with blue stones"
   },
@@ -67,6 +67,7 @@ export const products = [
 
 export const categoryLabels = {
   "engagement-rings": "Engagement Rings",
+  rings: "Rings",
   "wedding-bands": "Wedding Bands",
   necklaces: "Necklaces",
   chains: "Chains",
@@ -85,9 +86,9 @@ export const customizerOptions = {
   earringWeights: ["1 carat", "1.5 carat", "2 carat", "2.5 carat", "3 carat", "3.5 carat", "4 carat", "4.5 carat", "5 carat", "5.5 carat", "6 carat"],
   diamondColors: ["D", "E"],
   clarity: ["VVS", "VS"],
-  luxuryMetals: ["14K Yellow Gold", "14K White Gold", "14K Rose Gold", "Platinum", "Silver"],
+  luxuryMetals: ["14K Yellow Gold", "14K White Gold", "14K Rose Gold", "18K Yellow Gold", "18K White Gold", "18K Rose Gold", "Platinum"],
   ringSizes,
-  stoneShapes: ["Round", "Cushion", "Emerald", "Asscher", "Oval", "Pear", "Marquise", "Radiant", "Portuguese Cut", "Custom Shape"],
+  stoneShapes: ["Round", "Cushion", "Emerald", "Asscher", "Oval", "Pear", "Marquise", "Radiant", "Custom Shape"],
   earringTypes: ["Stud", "Hoop", "Drop", "Cluster", "Statement"],
   necklaceSizes: ["16 in", "18 in", "20 in", "22 in", "24 in"],
   chainSizes: ["18 in", "20 in", "22 in", "24 in", "26 in", "30 in"],
@@ -101,22 +102,25 @@ export const metalModifiers = {
   "14K Yellow Gold": 0,
   "14K White Gold": 250,
   "14K Rose Gold": 220,
-  Platinum: 900,
+  "18K Yellow Gold": 450,
+  "18K White Gold": 700,
+  "18K Rose Gold": 650,
+  Platinum: 700,
   Silver: 120
 };
 
 export const caratModifiers = {
-  "1 carat": 1200,
-  "1.5 carat": 2200,
-  "2 carat": 3600,
-  "2.5 carat": 5000,
-  "3 carat": 6500,
-  "3.5 carat": 8200,
-  "4 carat": 9800,
-  "4.5 carat": 12200,
-  "5 carat": 14500,
-  "5.5 carat": 16800,
-  "6 carat": 19500
+  "1 carat": 1900,
+  "1.5 carat": 2160,
+  "2 carat": 2420,
+  "2.5 carat": 2680,
+  "3 carat": 2940,
+  "3.5 carat": 3200,
+  "4 carat": 3460,
+  "4.5 carat": 3720,
+  "5 carat": 3980,
+  "5.5 carat": 4240,
+  "6 carat": 4500
 };
 
 export const styleModifiers = {
@@ -212,7 +216,22 @@ const categoryConfig = {
       ["carat", "Diamond Size", customizerOptions.diamondSizes],
       ["color", "Diamond Color", customizerOptions.diamondColors],
       ["clarity", "Clarity", customizerOptions.clarity],
-      ["style", "Chain Style", customizerOptions.chainTypes]
+      ["style", "Chain Style", [...customizerOptions.chainTypes, "Mooncut", "Franco"]]
+    ]
+  },
+  "silver-cross-chain": {
+    label: "Silver Cross Chain",
+    intro: "Choose chain size, stone type, diamond color, clarity, and chain style for this silver cross chain request.",
+    previewCta: "Request Quote / Message Us",
+    customCta: "Message Us for Custom Chain Design",
+    summaryAria: "Live silver cross chain selection summary",
+    sections: [
+      ["size", "Chain Size", customizerOptions.chainSizes],
+      ["metal", "Metal", ["Silver"]],
+      ["carat", "Stone Type", ["Emerald", "Ruby", "Sapphire", "Diamond", "Aquamarine", "Tourmaline", "Topaz", "Amethyst", "Peridot"]],
+      ["color", "Diamond Color", customizerOptions.diamondColors],
+      ["clarity", "Clarity", customizerOptions.clarity],
+      ["style", "Chain Style", [...customizerOptions.chainTypes, "Mooncut", "Franco"]]
     ]
   },
   bracelets: {
@@ -241,15 +260,27 @@ export function getProduct(productId) {
 }
 
 export function getCategoryProducts(category) {
+  if (category === "rings") {
+    return products.filter((product) => ["engagement-rings", "wedding-bands"].includes(product.category));
+  }
   return products.filter((product) => product.category === category);
 }
 
 export function getProductConfig(product) {
+  if (categoryConfig[product.id]) return categoryConfig[product.id];
   return categoryConfig[product.category] || categoryConfig["engagement-rings"];
 }
 
 export function getCustomizerSections(product) {
   return getProductConfig(product).sections;
+}
+
+export function getOptionDetail(key, option) {
+  if (key === "carat" && caratModifiers[option]) {
+    return formatCurrency(caratModifiers[option]);
+  }
+
+  return "";
 }
 
 export function getDefaultSelection(product) {
@@ -276,6 +307,14 @@ export function formatCurrency(amount) {
 }
 
 export function estimatePrice(product, selection) {
+  if (["engagement-rings", "wedding-bands"].includes(product.category)) {
+    const metalPremium =
+      String(selection.metal || "").startsWith("18K") ? 300 :
+      selection.metal === "Platinum" ? 700 :
+      0;
+    return (caratModifiers[selection.carat] || product.basePrice) + metalPremium;
+  }
+
   return (
     product.basePrice +
     (metalModifiers[selection.metal] || 0) +

@@ -75,6 +75,15 @@ img {
   color: white;
 }
 
+.brand-menu-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
 .brand-logo {
   width: clamp(150px, 19vw, 230px);
   height: 58px;
@@ -145,6 +154,86 @@ img {
   color: var(--gold);
   border: 1px solid rgba(200, 162, 74, 0.56);
   font-size: 0.76rem;
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 19;
+  background: rgba(8, 7, 6, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.site-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: min(360px, 88vw);
+  height: 100vh;
+  padding: 22px;
+  color: white;
+  background:
+    linear-gradient(180deg, rgba(8, 7, 6, 0.94), rgba(8, 7, 6, 0.88)),
+    url("/assets/diamond-banner.jpg") center/cover;
+  border-right: 1px solid rgba(200, 162, 74, 0.38);
+  box-shadow: 24px 0 50px rgba(0, 0, 0, 0.34);
+  transform: translateX(-105%);
+  transition: transform 200ms ease;
+}
+
+.site-sidebar.is-open {
+  transform: translateX(0);
+}
+
+.sidebar-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.sidebar-head strong,
+.sidebar-head small {
+  display: block;
+}
+
+.sidebar-head small {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.sidebar-close {
+  min-height: 36px;
+  padding: 8px 11px;
+  border: 1px solid rgba(200, 162, 74, 0.46);
+  border-radius: 6px;
+  background: rgba(8, 7, 6, 0.62);
+  color: var(--gold);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+}
+
+.sidebar-links {
+  display: grid;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.sidebar-links a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: rgba(8, 7, 6, 0.54);
+  color: white;
+  font-weight: 850;
 }
 
 main {
@@ -499,6 +588,12 @@ h3 {
   line-height: 1.7;
 }
 
+.video-preview-note {
+  margin: -4px 0 18px;
+  color: var(--gold-dark);
+  font-weight: 900;
+}
+
 .option-group {
   margin: 26px 0;
   padding: 0;
@@ -517,6 +612,9 @@ h3 {
 }
 
 .option-button {
+  display: grid;
+  place-items: center;
+  gap: 2px;
   min-width: 62px;
   min-height: 42px;
   padding: 10px 14px;
@@ -529,11 +627,21 @@ h3 {
   font-weight: 750;
 }
 
+.option-button small {
+  color: var(--gold-dark);
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
 .option-button.is-selected {
   background: var(--black);
   border-color: var(--gold);
   color: var(--gold);
   box-shadow: inset 0 0 0 1px var(--gold);
+}
+
+.option-button.is-selected small {
+  color: #f1d781;
 }
 
 .preview-button {
@@ -663,6 +771,38 @@ dd {
   text-align: center;
 }
 
+.terms-viewer-section {
+  padding: clamp(28px, 5vw, 56px) clamp(18px, 5vw, 72px);
+  background: var(--soft);
+}
+
+.terms-document {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 42px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.terms-document h2 {
+  margin: 26px 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+}
+
+.terms-document p {
+  color: #4f473d;
+  line-height: 1.75;
+}
+
+.terms-intro {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 800;
+}
+
 .custom-order-band {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
@@ -718,6 +858,7 @@ dd {
 }
 
 .diamond-video-player,
+.diamond-video-public,
 .diamond-video-form {
   background: white;
   border: 1px solid var(--line);
@@ -725,7 +866,8 @@ dd {
   box-shadow: var(--shadow);
 }
 
-.diamond-video-player {
+.diamond-video-player,
+.diamond-video-public {
   min-height: 340px;
   overflow: hidden;
 }
@@ -737,6 +879,7 @@ dd {
   border: 0;
   background: var(--black);
   object-fit: cover;
+  filter: brightness(1.22) contrast(1.08) saturate(1.04);
 }
 
 .video-empty {
@@ -770,6 +913,21 @@ dd {
   background: #fffdfa;
   color: var(--ink);
   font: inherit;
+}
+
+.diamond-video-form select {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fffdfa;
+  color: var(--ink);
+  font: inherit;
+}
+
+.admin-video-section {
+  background: var(--soft);
 }
 
 .video-form-actions {
@@ -860,9 +1018,10 @@ dd {
 }
 
 .site-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 22px;
+  display: grid;
+  grid-template-columns: minmax(260px, 1.4fr) minmax(260px, 1fr) minmax(180px, 0.7fr);
+  gap: clamp(28px, 6vw, 72px);
+  align-items: start;
   padding: 34px clamp(18px, 5vw, 72px);
   background: var(--black);
   color: white;
@@ -875,19 +1034,33 @@ dd {
 }
 
 .footer-links a {
+  display: block;
   color: var(--gold);
+  font-weight: 800;
+}
+
+.footer-links {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.deploy-version {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.78rem;
   font-weight: 800;
 }
 
 .footer-contact {
   display: grid;
-  gap: 6px;
-  max-width: 280px;
+  gap: 10px;
+  max-width: 360px;
 }
 
 .footer-contact a {
   color: var(--gold);
-  font-size: 1.15rem;
+  overflow-wrap: anywhere;
+  font-size: 1rem;
   font-weight: 900;
 }
 
@@ -930,7 +1103,7 @@ dd {
   .site-header,
   .site-footer {
     align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .nav-links {

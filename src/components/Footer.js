@@ -14,6 +14,9 @@ export function Footer() {
       <div class="footer-links">
         <a href="#/products">Shop Now</a>
         <a href="#/checkout">Checkout</a>
+        <a href="#/terms">Terms and Conditions</a>
+        <a href="https://peoplesartist.org/2026/carlos-gonzalez">People's Artist</a>
+        <span class="deploy-version">Updated Render build v60</span>
       </div>
     </footer>
   `;

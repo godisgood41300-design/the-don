@@ -108,14 +108,41 @@ function diamondVideoSection(product) {
     <section class="diamond-video-section">
       <div class="section-heading">
         <p class="eyebrow">Diamond Video</p>
-        <h2>Show this diamond on video</h2>
-        <p>Paste a YouTube link or hosted video link for this exact piece. For personal videos, upload a preview here during the demo or host the video later and paste the link.</p>
+        <h2>Watch Video Preview</h2>
+        <p>Watch a close-up video of this diamond or jewelry piece before requesting a quote.</p>
       </div>
+      <div class="diamond-video-public">
+        ${videoPlayer(currentVideo, product.name)}
+      </div>
+    </section>
+  `;
+}
+
+function adminVideoManager(selectedProductId = products[0].id) {
+  const product = getProduct(selectedProductId);
+  const currentVideo = getProductVideo(product.id);
+
+  shell(`
+    <section class="page-hero compact">
+      <img class="page-hero-logo" src="/assets/don-logo.jpg" alt="The Don Jewelers and Jewelry logo" />
+      <p class="eyebrow">Admin Video Manager</p>
+      <h1>Post product videos</h1>
+      <p>This hidden mock-admin page lets you save a YouTube or hosted video link for each product. Public product pages only show the video, not the editing controls.</p>
+    </section>
+    <section class="diamond-video-section admin-video-section">
       <div class="diamond-video-layout">
         <div class="diamond-video-player" id="diamond-video-player">
           ${videoPlayer(currentVideo, product.name)}
         </div>
-        <form class="diamond-video-form" data-product-id="${product.id}" aria-label="Product video manager">
+        <form class="diamond-video-form" data-product-id="${product.id}" aria-label="Admin product video manager">
+          <label>
+            <span>Product</span>
+            <select name="product-id">
+              ${products.map((item) => `
+                <option value="${item.id}" ${item.id === product.id ? "selected" : ""}>${item.name}</option>
+              `).join("")}
+            </select>
+          </label>
           <label>
             <span>YouTube or hosted video link</span>
             <input type="url" name="video-url" placeholder="https://youtube.com/watch?v=..." value="${currentVideo}" />
@@ -128,15 +155,49 @@ function diamondVideoSection(product) {
             <span>Preview a personal video file</span>
             <input type="file" name="video-file" accept="video/*" />
           </label>
-          <p class="video-note">Mock upload preview only. For the live site, connect this field to cloud storage or a product dashboard.</p>
+          <p class="video-note">Prototype admin only. On the live site, connect this to secure login plus cloud storage or a product dashboard so updates are visible to everyone.</p>
         </form>
       </div>
     </section>
-  `;
+  `);
+  bindVideoManager(product);
 }
 
 function shell(content) {
   app.innerHTML = `${Header(getCart().length)}<main>${content}${AboutUs()}</main>${Footer()}`;
+  bindSidebar();
+}
+
+function bindSidebar() {
+  const openButton = document.querySelector("#sidebar-open");
+  const closeButton = document.querySelector("#sidebar-close");
+  const sidebar = document.querySelector("#site-sidebar");
+  const backdrop = document.querySelector("#sidebar-backdrop");
+  if (!openButton || !closeButton || !sidebar || !backdrop) return;
+
+  const openSidebar = () => {
+    sidebar.classList.add("is-open");
+    sidebar.setAttribute("aria-hidden", "false");
+    openButton.setAttribute("aria-expanded", "true");
+    backdrop.hidden = false;
+    closeButton.focus();
+  };
+
+  const closeSidebar = () => {
+    sidebar.classList.remove("is-open");
+    sidebar.setAttribute("aria-hidden", "true");
+    openButton.setAttribute("aria-expanded", "false");
+    backdrop.hidden = true;
+    openButton.focus();
+  };
+
+  openButton.addEventListener("click", openSidebar);
+  closeButton.addEventListener("click", closeSidebar);
+  backdrop.addEventListener("click", closeSidebar);
+  sidebar.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeSidebar));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && sidebar.classList.contains("is-open")) closeSidebar();
+  });
 }
 
 function AboutUs() {
@@ -219,7 +280,8 @@ function productsPage(category = null) {
     <section class="page-hero compact">
       <img class="page-hero-logo" src="/assets/don-logo.jpg" alt="The Don Jewelers and Jewelry logo" />
       <p class="eyebrow">Jewelry Marketplace</p>
-      <h1>${category === "engagement-rings" ? "Build your engagement ring with The Don" : `Shop ${title} with The Don`}</h1>
+      <h1>${category === "engagement-rings" ? "Build your engagement ring with The Don" : category === "rings" ? "Browse all rings from The Don" : `Shop ${title} with The Don`}</h1>
+      ${category === "rings" ? `<p>Explore engagement rings and wedding bands in one place. More ready-made ring photos can be added here as inventory grows.</p>` : ""}
       ${category === "engagement-rings" ? `<a class="button button-gold" href="#/product/luna-solitaire">Build Your Engagement Ring</a>` : ""}
     </section>
     <section class="product-grid">
@@ -261,7 +323,6 @@ function productPage(productId) {
     ${diamondVideoSection(product)}
   `);
   bindCustomizer(product.id);
-  bindVideoManager(product);
 }
 
 function bindCustomizer(productId) {
@@ -284,17 +345,22 @@ function bindVideoManager(product) {
 
   const urlInput = form.querySelector('input[name="video-url"]');
   const fileInput = form.querySelector('input[name="video-file"]');
+  const productSelect = form.querySelector('select[name="product-id"]');
   const player = document.querySelector("#diamond-video-player");
+
+  productSelect.addEventListener("change", () => {
+    adminVideoManager(productSelect.value);
+  });
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     setProductVideo(product.id, urlInput.value.trim());
-    productPage(product.id);
+    adminVideoManager(product.id);
   });
 
   form.querySelector(".clear-video-link").addEventListener("click", () => {
     setProductVideo(product.id, "");
-    productPage(product.id);
+    adminVideoManager(product.id);
   });
 
   fileInput.addEventListener("change", () => {
@@ -404,6 +470,45 @@ function checkoutPage() {
   // Snipcart item payload, Medusa cart, WooCommerce order, or vendor-dashboard order here.
 }
 
+function termsPage() {
+  const terms = [
+    ["Custom Jewelry Policy", "All custom jewelry projects are made-to-order and manufactured specifically for the client. Custom projects include but are not limited to engagement rings, pendants, grillz, watches, bracelets, earrings, necklaces, nameplates, custom CAD projects, and one-of-one jewelry pieces. Once CAD work, stone sourcing, manufacturing preparation, or production has begun, all deposits become non-refundable. All custom jewelry sales are final."],
+    ["CAD Design Deposits", "A non-refundable CAD/design deposit may be required before any custom project begins. CAD deposits cover CAD rendering, designer labor, stone sourcing, production preparation, vendor sourcing time, and manufacturing planning. CAD deposits are credited toward the final project balance unless otherwise stated in writing. Clients are entitled to reasonable CAD revisions before final approval. Once the client approves the CAD render/design, production officially begins."],
+    ["Production Timelines", "Estimated production timelines vary depending on stone availability, metal availability, vendor inventory, project complexity, hand-setting processes, casting schedules, shipping delays, and international sourcing. Simple custom pieces: 2-4 weeks. Engagement rings: 3-6 weeks. Complex custom projects: 4-8+ weeks. Watches/custom iced pieces: 6-12+ weeks. Grillz: 1-3 weeks. Production timelines are estimates only and are not guaranteed delivery dates. Rush production services may be available depending on production capacity and vendor availability. Approved rush orders are subject to an automatic additional 20% rush fee added to the total project cost. Rush fees are non-refundable once production begins."],
+    ["Payment Terms", "Accepted payment methods include cash, certified check, bank wire transfer, Apple Pay, and credit/debit card payments processed securely through Stripe. Certain transactions may require identity verification, billing verification, or signed invoice approval. Custom projects require a deposit before production begins unless otherwise agreed upon in writing. Remaining balances must be paid in full before delivery, pickup, shipment, or release of the item. Chargebacks or payment disputes filed after production has begun on a custom project may be considered fraudulent and subject to legal action and collections procedures. Returned checks are subject to additional fees and may delay production or release of items."],
+    ["Returns & Exchanges", "Due to the nature of custom-made jewelry, all custom projects are final sale. Non-custom items may qualify for return or exchange within 7 days of delivery if the item is unworn, undamaged, and includes original packaging and paperwork. Approved returns may be subject to inspection, restocking fees, refinishing deductions, and shipping deductions. Custom jewelry, engraved items, resized items, special-order items, personalized pieces, and rush orders are non-refundable."],
+    ["Stone & Material Disclosure", "All diamonds and gemstones are sold based on available grading and certifications. Lab-grown diamonds may include IGI, GCAL, or other recognized certifications. Natural diamonds may include GIA, IGI, or other recognized laboratories. Accent stones or melee diamonds may not include individual certifications. Metal weights, stone weights, and specifications may vary slightly due to polishing and hand-finishing tolerances."],
+    ["Appraisals", "Appraisals are estimates of insurance/replacement value and are not guarantees of resale value. Gold, diamond, and gemstone markets fluctuate regularly."],
+    ["Shipping Policy", "All shipments require adult signature confirmation, insurance, and verified billing information. The Don Jewelers & Jewelry is not liable for incorrect addresses provided by clients, carrier delays, or lost packages marked delivered by the carrier. Risk transfers to the client upon confirmed delivery."],
+    ["Warranty & Repairs", "The Don Jewelers & Jewelry offers limited workmanship coverage on manufacturing defects. Coverage does not include physical damage, neglect, bent jewelry, broken chains, chipped stones, water damage, loss/theft, or normal wear and tear. Third-party modifications void all warranty coverage."],
+    ["Client Responsibility", "Clients are responsible for providing accurate ring sizing, reviewing CAD renders carefully, reviewing invoices/specifications before approval, and maintaining insurance after delivery. CAD approval serves as authorization to manufacture the final piece."],
+    ["Communication & Approvals", "All approvals should be made in writing via text message, email, signed invoice, or written agreement. Verbal approvals may not be honored."],
+    ["Right to Refuse Service", "The Don Jewelers & Jewelry reserves the right to refuse service, decline projects, cancel orders, refuse transactions, or refund payments before production begins at its sole discretion."],
+    ["Limitation of Liability", "The Don Jewelers & Jewelry shall not be held liable for indirect damages, emotional damages, shipping delays, vendor delays, market fluctuations, or loss of profits. Liability shall never exceed the original purchase amount paid by the client."],
+    ["Agreement", "By placing an order, paying a deposit, approving a CAD design, or submitting payment, the client acknowledges they have read, understood, and agreed to all Terms & Conditions listed above."]
+  ];
+
+  shell(`
+    <section class="page-hero compact">
+      <img class="page-hero-logo" src="/assets/don-logo.jpg" alt="The Don Jewelers and Jewelry logo" />
+      <p class="eyebrow">Legal</p>
+      <h1>Terms and Conditions</h1>
+      <a class="button button-gold" href="/assets/The_Don_Jewelers_Terms_and_Conditions.pdf" download>Download Original PDF</a>
+    </section>
+    <section class="terms-viewer-section">
+      <article class="terms-document">
+        <p class="terms-intro">By purchasing, placing a deposit, requesting a CAD design, or entering production with The Don Jewelers & Jewelry, the client agrees to all terms and conditions listed below.</p>
+        ${terms.map(([title, body], index) => `
+          <section>
+            <h2>${index + 1}. ${title}</h2>
+            <p>${body}</p>
+          </section>
+        `).join("")}
+      </article>
+    </section>
+  `);
+}
+
 function customOrdersPage() {
   shell(`
     <section class="page-hero compact custom-orders-hero">
@@ -456,6 +561,8 @@ function route() {
   if (page === "product") return productPage(id);
   if (page === "preview") return previewPage(id);
   if (page === "custom-orders") return customOrdersPage();
+  if (page === "admin-videos") return adminVideoManager(id || products[0].id);
+  if (page === "terms") return termsPage();
   if (page === "vendor") return productsPage();
   if (page === "cart") return cartPage();
   if (page === "checkout") return checkoutPage();
