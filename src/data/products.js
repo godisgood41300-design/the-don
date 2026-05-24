@@ -15,8 +15,8 @@ export const products = [
     vendorId: "don",
     category: "engagement-rings",
     basePrice: 4200,
-    image: "/assets/gold-engagement-rings.png",
-    alt: "Gold engagement rings in a black jewelry box"
+    image: "/assets/engagement-ring-feature.png",
+    alt: "Radiant diamond engagement ring on hand"
   },
   {
     id: "wedding-band",

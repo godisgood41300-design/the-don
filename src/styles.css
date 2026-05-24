@@ -57,9 +57,14 @@ img {
   justify-content: space-between;
   gap: 20px;
   padding: 16px clamp(18px, 4vw, 56px);
-  background: rgba(255, 253, 250, 0.92);
-  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, rgba(8, 7, 6, 0.42) 48%, rgba(8, 7, 6, 0.88) 100%),
+    linear-gradient(90deg, rgba(8, 7, 6, 0.76), rgba(8, 7, 6, 0.28), rgba(8, 7, 6, 0.76)),
+    url("/assets/diamond-banner.jpg") center 50%/100% auto;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(200, 162, 74, 0.36);
   backdrop-filter: blur(18px);
+  box-shadow: 0 14px 32px rgba(8, 7, 6, 0.28);
 }
 
 .brand {
@@ -67,6 +72,7 @@ img {
   align-items: center;
   gap: 12px;
   min-width: 0;
+  color: white;
 }
 
 .brand-logo {
@@ -82,11 +88,15 @@ img {
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   color: var(--gold);
-  background: var(--black);
+  background: rgba(8, 7, 6, 0.78);
+  border: 1px solid rgba(200, 162, 74, 0.68);
   border-radius: 50%;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.88rem;
+  font-weight: 900;
 }
 
 .brand strong,
@@ -97,7 +107,7 @@ img {
 
 .brand small {
   margin-top: 4px;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.68);
   font-size: 0.72rem;
 }
 
@@ -105,14 +115,22 @@ img {
   display: flex;
   align-items: center;
   gap: clamp(12px, 3vw, 28px);
-  color: #3b342d;
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.95rem;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
 
+.nav-links a {
+  padding: 6px 9px;
+  border-radius: 5px;
+  background: rgba(8, 7, 6, 0.58);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 16px rgba(0, 0, 0, 0.65);
+}
+
 .nav-highlight {
-  color: var(--gold-dark);
+  color: var(--gold);
   font-weight: 900;
 }
 
@@ -124,7 +142,8 @@ img {
   margin-left: 4px;
   border-radius: 99px;
   background: var(--black);
-  color: var(--paper);
+  color: var(--gold);
+  border: 1px solid rgba(200, 162, 74, 0.56);
   font-size: 0.76rem;
 }
 
@@ -140,8 +159,8 @@ main {
   padding: clamp(90px, 10vw, 140px) clamp(20px, 6vw, 88px);
   color: white;
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.32)),
-    url("https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=1800&q=80") center/cover;
+    linear-gradient(90deg, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.38)),
+    url("/assets/don-logo.jpg") center/cover;
 }
 
 .hero::after {
@@ -679,6 +698,93 @@ dd {
   background: var(--soft);
 }
 
+.diamond-video-section {
+  padding: clamp(44px, 7vw, 88px) clamp(18px, 5vw, 72px);
+  background: linear-gradient(135deg, #fffdfa, #f4efe6);
+  border-top: 1px solid var(--line);
+}
+
+.diamond-video-section .section-heading p:not(.eyebrow) {
+  max-width: 760px;
+  color: #4f473d;
+  line-height: 1.75;
+}
+
+.diamond-video-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(280px, 420px);
+  gap: 24px;
+  align-items: start;
+}
+
+.diamond-video-player,
+.diamond-video-form {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.diamond-video-player {
+  min-height: 340px;
+  overflow: hidden;
+}
+
+.diamond-video-frame {
+  display: block;
+  width: 100%;
+  height: clamp(320px, 42vw, 520px);
+  border: 0;
+  background: var(--black);
+  object-fit: cover;
+}
+
+.video-empty {
+  display: grid;
+  place-items: center;
+  min-height: 340px;
+  padding: 28px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.diamond-video-form {
+  display: grid;
+  gap: 16px;
+  padding: clamp(18px, 3vw, 26px);
+}
+
+.diamond-video-form label {
+  display: grid;
+  gap: 8px;
+  color: #4f473d;
+  font-weight: 850;
+}
+
+.diamond-video-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fffdfa;
+  color: var(--ink);
+  font: inherit;
+}
+
+.video-form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.video-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
 .custom-order-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -773,6 +879,23 @@ dd {
   font-weight: 800;
 }
 
+.footer-contact {
+  display: grid;
+  gap: 6px;
+  max-width: 280px;
+}
+
+.footer-contact a {
+  color: var(--gold);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.footer-contact span {
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.5;
+}
+
 @media (max-width: 980px) {
   .collection-grid,
   .product-grid {
@@ -782,6 +905,7 @@ dd {
   .customizer-layout,
   .preview-layout,
   .cart-layout,
+  .diamond-video-layout,
   .product-detail-hero,
   .split-section,
   .engagement-feature,
@@ -844,5 +968,9 @@ dd {
 
   .button {
     width: 100%;
+  }
+
+  .video-form-actions {
+    grid-template-columns: 1fr;
   }
 }

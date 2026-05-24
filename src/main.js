@@ -9,6 +9,11 @@ import { categoryLabels, estimatePrice, formatCurrency, getCategoryProducts, get
 const app = document.querySelector("#app");
 const cartKey = "nakama-gems-cart";
 const selectionKey = "nakama-gems-selection";
+const videoKey = "the-don-product-videos";
+const contactPhone = "(484) 761-2008";
+const contactPhoneHref = "tel:+14847612008";
+const contactEmail = "Thedonjewelersandjewelry@gmail.com";
+const contactEmailHref = `mailto:${contactEmail}`;
 
 function getCart() {
   return JSON.parse(localStorage.getItem(cartKey) || "[]");
@@ -27,6 +32,107 @@ function setSelection(productId, selection) {
   const selections = JSON.parse(localStorage.getItem(selectionKey) || "{}");
   selections[productId] = selection;
   localStorage.setItem(selectionKey, JSON.stringify(selections));
+}
+
+function getProductVideos() {
+  return JSON.parse(localStorage.getItem(videoKey) || "{}");
+}
+
+function getProductVideo(productId) {
+  return getProductVideos()[productId] || "";
+}
+
+function setProductVideo(productId, url) {
+  const videos = getProductVideos();
+  if (url) {
+    videos[productId] = url;
+  } else {
+    delete videos[productId];
+  }
+  localStorage.setItem(videoKey, JSON.stringify(videos));
+}
+
+function youtubeEmbedUrl(url) {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes("youtu.be")) {
+      return `https://www.youtube.com/embed/${parsed.pathname.slice(1)}`;
+    }
+    if (parsed.hostname.includes("youtube.com")) {
+      const watchId = parsed.searchParams.get("v");
+      if (watchId) return `https://www.youtube.com/embed/${watchId}`;
+      const shortMatch = parsed.pathname.match(/\/shorts\/([^/]+)/);
+      if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+      const embedMatch = parsed.pathname.match(/\/embed\/([^/]+)/);
+      if (embedMatch) return `https://www.youtube.com/embed/${embedMatch[1]}`;
+    }
+  } catch {
+    return "";
+  }
+  return "";
+}
+
+function videoPlayer(url, productName) {
+  if (!url) {
+    return `
+      <div class="video-empty">
+        <p>No video posted for this diamond yet.</p>
+      </div>
+    `;
+  }
+
+  const youtubeUrl = youtubeEmbedUrl(url);
+  if (youtubeUrl) {
+    return `
+      <iframe
+        class="diamond-video-frame"
+        src="${youtubeUrl}"
+        title="${productName} diamond video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    `;
+  }
+
+  return `
+    <video class="diamond-video-frame" src="${url}" controls playsinline>
+      Your browser does not support video playback.
+    </video>
+  `;
+}
+
+function diamondVideoSection(product) {
+  const currentVideo = getProductVideo(product.id);
+
+  return `
+    <section class="diamond-video-section">
+      <div class="section-heading">
+        <p class="eyebrow">Diamond Video</p>
+        <h2>Show this diamond on video</h2>
+        <p>Paste a YouTube link or hosted video link for this exact piece. For personal videos, upload a preview here during the demo or host the video later and paste the link.</p>
+      </div>
+      <div class="diamond-video-layout">
+        <div class="diamond-video-player" id="diamond-video-player">
+          ${videoPlayer(currentVideo, product.name)}
+        </div>
+        <form class="diamond-video-form" data-product-id="${product.id}" aria-label="Product video manager">
+          <label>
+            <span>YouTube or hosted video link</span>
+            <input type="url" name="video-url" placeholder="https://youtube.com/watch?v=..." value="${currentVideo}" />
+          </label>
+          <div class="video-form-actions">
+            <button class="button button-gold" type="submit">Save Video Link</button>
+            <button class="button button-light clear-video-link" type="button">Remove Video</button>
+          </div>
+          <label>
+            <span>Preview a personal video file</span>
+            <input type="file" name="video-file" accept="video/*" />
+          </label>
+          <p class="video-note">Mock upload preview only. For the live site, connect this field to cloud storage or a product dashboard.</p>
+        </form>
+      </div>
+    </section>
+  `;
 }
 
 function shell(content) {
@@ -59,7 +165,7 @@ function homePage() {
         <p>Build your engagement ring, select high-end diamond jewelry, or start a one-of-one custom order with a premium client experience from first idea to final piece.</p>
         <div class="hero-actions">
           <a class="button button-gold" href="#/product/luna-solitaire">Build Your Engagement Ring</a>
-          <a class="button button-ghost" href="#/custom-orders">Message Us for Custom Design</a>
+          <a class="button button-ghost" href="${contactEmailHref}?subject=Custom%20Jewelry%20Design">Message Us for Custom Design</a>
         </div>
       </div>
     </section>
@@ -82,7 +188,7 @@ function homePage() {
       </div>
       <div class="collection-grid">
         ${[
-          ["Engagement Rings", "engagement-rings", "/assets/gold-engagement-rings.png"],
+          ["Engagement Rings", "engagement-rings", "/assets/engagement-ring-feature.png"],
           ["Wedding Bands", "wedding-bands", "/assets/gold-engagement-rings.png"],
           ["Necklaces", "necklaces", "/assets/red-diamond-necklace.png"],
           ["Chains", "chains", "/assets/silver-cross-chain.png"],
@@ -128,12 +234,12 @@ function customOrdersPromo() {
       <div>
         <p class="eyebrow">Custom Orders</p>
         <h2>Looking for something 1-of-1?</h2>
-        <p>Message us for custom designs, custom stone sizes, custom shapes, and full custom jewelry projects.</p>
+        <p>Message us for custom designs, custom stone sizes, custom shapes, and full custom jewelry projects. For quotes or additional questions, call or text ${contactPhone} or email ${contactEmail}.</p>
       </div>
       <div class="custom-order-actions">
         <a class="button button-gold" href="#/custom-orders">Start Custom Order</a>
-        <a class="button button-light" href="mailto:orders@example.com?subject=Custom Jewelry Design">Message Us Directly</a>
-        <a class="button button-dark" href="#/custom-orders">Request a Quote</a>
+        <a class="button button-light" href="${contactEmailHref}?subject=Custom%20Jewelry%20Design">Message Us Directly</a>
+        <a class="button button-dark" href="${contactEmailHref}?subject=Jewelry%20Quote%20Request">Request a Quote</a>
       </div>
     </section>
   `;
@@ -152,8 +258,10 @@ function productPage(productId) {
       </div>
     </section>
     ${RingCustomizer(product, selection)}
+    ${diamondVideoSection(product)}
   `);
   bindCustomizer(product.id);
+  bindVideoManager(product);
 }
 
 function bindCustomizer(productId) {
@@ -167,6 +275,33 @@ function bindCustomizer(productId) {
       setSelection(productId, selection);
       productPage(productId);
     });
+  });
+}
+
+function bindVideoManager(product) {
+  const form = document.querySelector(".diamond-video-form");
+  if (!form) return;
+
+  const urlInput = form.querySelector('input[name="video-url"]');
+  const fileInput = form.querySelector('input[name="video-file"]');
+  const player = document.querySelector("#diamond-video-player");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    setProductVideo(product.id, urlInput.value.trim());
+    productPage(product.id);
+  });
+
+  form.querySelector(".clear-video-link").addEventListener("click", () => {
+    setProductVideo(product.id, "");
+    productPage(product.id);
+  });
+
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    const previewUrl = URL.createObjectURL(file);
+    player.innerHTML = videoPlayer(previewUrl, product.name);
   });
 }
 
@@ -185,7 +320,7 @@ function previewPage(productId) {
         <h1>Your ${product.name}</h1>
         ${SelectionSummary(product, selection)}
         <div class="preview-actions">
-          <a class="button button-gold" href="#/custom-orders">Request Quote / Message Us</a>
+          <a class="button button-gold" href="${contactEmailHref}?subject=Jewelry%20Quote%20Request">Request Quote / Message Us</a>
           <button class="button button-gold" type="button" id="add-to-cart">Add to Cart</button>
           <a class="button button-light" href="#/product/${product.id}">Edit Selection</a>
         </div>
@@ -275,7 +410,7 @@ function customOrdersPage() {
       <img class="page-hero-logo" src="/assets/don-logo.jpg" alt="The Don Jewelers and Jewelry logo" />
       <p class="eyebrow">Custom Orders</p>
       <h1>Start a one-of-one jewelry project</h1>
-      <p>Looking for something 1-of-1? Message us for custom designs, custom stone sizes, custom shapes, and full custom jewelry projects.</p>
+      <p>Looking for something 1-of-1? Message us for custom designs, custom stone sizes, custom shapes, and full custom jewelry projects. Call or text ${contactPhone}, or email ${contactEmail}, for direct quote support.</p>
     </section>
     ${customOrdersPromo()}
     <section class="custom-form-section">
@@ -309,7 +444,7 @@ function customOrdersPage() {
   `);
   document.querySelector(".custom-order-form").addEventListener("submit", (event) => {
     event.preventDefault();
-    event.currentTarget.insertAdjacentHTML("beforeend", `<p class="form-success">Request saved for this mockup. Message us directly to continue.</p>`);
+    event.currentTarget.insertAdjacentHTML("beforeend", `<p class="form-success">Request saved for this mockup. Call or text ${contactPhone}, or email ${contactEmail}, to continue.</p>`);
   });
 }
 

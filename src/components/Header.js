@@ -2,7 +2,11 @@ export function Header(cartCount = 0) {
   return `
     <header class="site-header">
       <a class="brand" href="#/">
-        <img class="brand-logo" src="/assets/don-logo.jpg" alt="The Don Jewelers and Jewelry logo" />
+        <span class="brand-mark" aria-hidden="true">TD</span>
+        <span>
+          <strong>The Don</strong>
+          <small>Jewelers & Jewelry</small>
+        </span>
       </a>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#/">Home</a>
