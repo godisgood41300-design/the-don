@@ -4,7 +4,7 @@ import { ProductCard } from "./components/ProductCard.js";
 import { RingCustomizer } from "./components/RingCustomizer.js";
 import { SelectionSummary } from "./components/SelectionSummary.js";
 import { CartItem } from "./components/CartItem.js";
-import { categoryLabels, estimatePrice, formatCurrency, getCategoryProducts, getProduct, getVendor, normalizeSelection, products } from "./data/products.js";
+import { categoryLabels, estimatePrice, formatCurrency, getCategoryProducts, getProduct, getVendor, normalizeSelection, productVideos, products } from "./data/products.js";
 
 const app = document.querySelector("#app");
 const cartKey = "nakama-gems-cart";
@@ -39,7 +39,7 @@ function getProductVideos() {
 }
 
 function getProductVideo(productId) {
-  return getProductVideos()[productId] || "";
+  return getProductVideos()[productId] || productVideos[productId] || "";
 }
 
 function setProductVideo(productId, url) {
@@ -113,6 +113,7 @@ function diamondVideoSection(product) {
       </div>
       <div class="diamond-video-public">
         ${videoPlayer(currentVideo, product.name)}
+        ${currentVideo ? `<button class="button button-light replay-video-button" type="button">Replay Video</button>` : ""}
       </div>
     </section>
   `;
@@ -323,6 +324,7 @@ function productPage(productId) {
     ${diamondVideoSection(product)}
   `);
   bindCustomizer(product.id);
+  bindVideoReplay();
 }
 
 function bindCustomizer(productId) {
@@ -368,6 +370,25 @@ function bindVideoManager(product) {
     if (!file) return;
     const previewUrl = URL.createObjectURL(file);
     player.innerHTML = videoPlayer(previewUrl, product.name);
+  });
+}
+
+function bindVideoReplay() {
+  document.querySelectorAll(".replay-video-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const frame = button.closest(".diamond-video-public")?.querySelector(".diamond-video-frame");
+      if (!frame) return;
+
+      if (frame.tagName.toLowerCase() === "video") {
+        frame.currentTime = 0;
+        frame.play();
+        return;
+      }
+
+      const src = frame.getAttribute("src");
+      frame.setAttribute("src", "");
+      frame.setAttribute("src", src);
+    });
   });
 }
 

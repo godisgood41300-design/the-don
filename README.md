@@ -26,6 +26,16 @@ node server.js
 
 Recommended path: push this folder to a GitHub repository, then connect that repo to Vercel or Render.
 
+Current deployment package marker: `v68-render-live-fix`.
+
+After deploying, check the live footer. It should say:
+
+```text
+Updated Render build v68 - rings and videos included
+```
+
+If it does not, Render is still serving an older deploy, or the project files were uploaded into a nested folder instead of the repository root.
+
 ### 1. Create a GitHub repo
 
 From this project folder:
@@ -66,6 +76,8 @@ Render is also ready for this repo as a Node web service.
 
 The included `render.yaml` and `server.js` use Render's `PORT` environment variable automatically.
 
+For stubborn old content on Render, open the service dashboard and run **Manual Deploy** with **Clear build cache & deploy** after pushing the newest GitHub files.
+
 ### 4. Add a domain later
 
 Both Vercel and Render will give you a temporary live URL first. Later, connect your personal domain in the platform dashboard by adding their DNS records at your domain registrar.
@@ -101,6 +113,9 @@ src/
 - Vendor profile pages with vendor bio and product listings
 - Cart stored in `localStorage`
 - Checkout placeholder page for future integration
+- Public product video previews, with admin-only upload/link controls on hidden admin routes
+
+Admin video links saved in the browser use `localStorage`, which is only for local editing. To make a video appear on Render for all customers, add that YouTube link to `productVideos` in `src/data/products.js` before deploying.
 
 ## Future Integration Notes
 

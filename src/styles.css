@@ -882,6 +882,10 @@ dd {
   filter: brightness(1.22) contrast(1.08) saturate(1.04);
 }
 
+.replay-video-button {
+  margin: 14px;
+}
+
 .video-empty {
   display: grid;
   place-items: center;

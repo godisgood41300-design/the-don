@@ -1,0 +1,11 @@
+{
+  "version": "v68-render-live-fix",
+  "updated": "2026-05-25",
+  "includes": [
+    "Classic Oval Engagement Ring product",
+    "Classic Marquise Engagement Ring product",
+    "Classic Marquise Engagement Ring YouTube video preview",
+    "Public product pages hide admin video controls"
+  ],
+  "renderCheck": "If the live footer does not show 'Updated Render build v68 - rings and videos included', Render is still serving an older deploy or the GitHub files were uploaded into the wrong folder."
+}

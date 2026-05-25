@@ -28,6 +28,24 @@ export const products = [
     alt: "Gold wedding bands in a black jewelry box"
   },
   {
+    id: "ready-engagement-ring-4662",
+    name: "Classic Oval Engagement Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 1900,
+    image: "/assets/ready-made-engagement-ring-4662.jpg",
+    alt: "Ready-made diamond engagement ring"
+  },
+  {
+    id: "classic-marquise-engagement-ring",
+    name: "Classic Marquise Engagement Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 1900,
+    image: "/assets/classic-marquise-engagement-ring.jpeg",
+    alt: "Classic marquise diamond engagement ring in jewelry box"
+  },
+  {
     id: "celeste-halo",
     name: "Princess Diamond Studs",
     vendorId: "don",
@@ -64,6 +82,10 @@ export const products = [
     alt: "Diamond tennis bracelet displayed on a white glove"
   }
 ];
+
+export const productVideos = {
+  "classic-marquise-engagement-ring": "https://youtube.com/shorts/LpTZaVwJ44I?si=f7hUc52RH6OM28fI"
+};
 
 export const categoryLabels = {
   "engagement-rings": "Engagement Rings",
@@ -123,6 +145,20 @@ export const caratModifiers = {
   "6 carat": 4500
 };
 
+export const readyRing4662CaratModifiers = {
+  "1 carat": 1600,
+  "1.5 carat": 1860,
+  "2 carat": 2120,
+  "2.5 carat": 2380,
+  "3 carat": 2640,
+  "3.5 carat": 2900,
+  "4 carat": 3160,
+  "4.5 carat": 3420,
+  "5 carat": 3680,
+  "5.5 carat": 3940,
+  "6 carat": 4200
+};
+
 export const styleModifiers = {
   Stud: 0,
   Hoop: 250,
@@ -145,6 +181,21 @@ export const styleModifiers = {
 };
 
 const categoryConfig = {
+  "ready-engagement-ring-4662": {
+    label: "Classic Oval Engagement Ring",
+    intro: "Select a diamond size, oval stone shape, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
+    previewCta: "Request Quote / Message Us",
+    customCta: "Message Us for Custom Design / Custom Stone Size",
+    summaryAria: "Live classic oval engagement ring selection summary",
+    sections: [
+      ["carat", "Diamond Size", customizerOptions.diamondSizes],
+      ["shape", "Stone Shape", ["Oval"]],
+      ["color", "Diamond Color", customizerOptions.diamondColors],
+      ["clarity", "Clarity", customizerOptions.clarity],
+      ["metal", "Metal", customizerOptions.luxuryMetals],
+      ["size", "Ring Size", customizerOptions.ringSizes]
+    ]
+  },
   "engagement-rings": {
     label: "Engagement Ring",
     intro: "Select a diamond size, stone shape, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
@@ -275,9 +326,10 @@ export function getCustomizerSections(product) {
   return getProductConfig(product).sections;
 }
 
-export function getOptionDetail(key, option) {
-  if (key === "carat" && caratModifiers[option]) {
-    return formatCurrency(caratModifiers[option]);
+export function getOptionDetail(key, option, product = null) {
+  if (key === "carat") {
+    const priceMap = product?.id === "ready-engagement-ring-4662" ? readyRing4662CaratModifiers : caratModifiers;
+    if (priceMap[option]) return formatCurrency(priceMap[option]);
   }
 
   return "";
@@ -307,6 +359,14 @@ export function formatCurrency(amount) {
 }
 
 export function estimatePrice(product, selection) {
+  if (product.id === "ready-engagement-ring-4662") {
+    const metalPremium =
+      String(selection.metal || "").startsWith("18K") ? 300 :
+      selection.metal === "Platinum" ? 700 :
+      0;
+    return (readyRing4662CaratModifiers[selection.carat] || product.basePrice) + metalPremium;
+  }
+
   if (["engagement-rings", "wedding-bands"].includes(product.category)) {
     const metalPremium =
       String(selection.metal || "").startsWith("18K") ? 300 :

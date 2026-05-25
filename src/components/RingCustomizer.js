@@ -18,7 +18,7 @@ export function RingCustomizer(product, selection) {
             <fieldset class="option-group" data-group="${key}">
               <legend>${title}</legend>
               <div class="option-grid">
-                ${options.map((option) => OptionButton({ label: option, selected: selection[key] === option, onClick: getOptionDetail(key, option) })).join("")}
+                ${options.map((option) => OptionButton({ label: option, selected: selection[key] === option, onClick: getOptionDetail(key, option, product) })).join("")}
               </div>
             </fieldset>
           `)
