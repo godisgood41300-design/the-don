@@ -72,6 +72,19 @@ function youtubeEmbedUrl(url) {
   return "";
 }
 
+function youtubeReplayUrl(src) {
+  try {
+    const replayUrl = new URL(src);
+    replayUrl.searchParams.set("autoplay", "1");
+    replayUrl.searchParams.set("start", "0");
+    replayUrl.searchParams.set("playsinline", "1");
+    replayUrl.searchParams.set("replay", String(Date.now()));
+    return replayUrl.toString();
+  } catch {
+    return src;
+  }
+}
+
 function videoPlayer(url, productName) {
   if (!url) {
     return `
@@ -317,6 +330,15 @@ function productPage(productId) {
       <div>
       <p class="eyebrow">${categoryLabels[product.category] || "Luxury Jewelry"}</p>
       <h1>${product.name}</h1>
+        ${product.description ? `<p class="product-description">${product.description}</p>` : ""}
+        ${product.specs?.length ? `
+          <div class="product-specs">
+            <p class="eyebrow">Specs</p>
+            <ul>
+              ${product.specs.map((spec) => `<li>${spec}</li>`).join("")}
+            </ul>
+          </div>
+        ` : ""}
         <p>Starting at ${formatCurrency(product.basePrice)} before diamond, color, size, and style modifiers.</p>
       </div>
     </section>
@@ -386,8 +408,7 @@ function bindVideoReplay() {
       }
 
       const src = frame.getAttribute("src");
-      frame.setAttribute("src", "");
-      frame.setAttribute("src", src);
+      frame.setAttribute("src", youtubeReplayUrl(src));
     });
   });
 }

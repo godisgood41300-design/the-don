@@ -14,7 +14,7 @@ export const products = [
     name: "Radiant Cut Diamond Ring with Tapered Baguettes",
     vendorId: "don",
     category: "engagement-rings",
-    basePrice: 1900,
+    basePrice: 2200,
     image: "/assets/engagement-ring-feature.png",
     alt: "Radiant diamond engagement ring on hand"
   },
@@ -44,6 +44,149 @@ export const products = [
     basePrice: 1900,
     image: "/assets/classic-marquise-engagement-ring.jpeg",
     alt: "Classic marquise diamond engagement ring in jewelry box"
+  },
+  {
+    id: "gold-halo-engagement-ring",
+    name: "Eternal Marquise Halo Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 1900,
+    image: "/assets/gold-halo-engagement-ring.jpeg",
+    alt: "Gold diamond halo engagement ring with diamond band",
+    description:
+      "Custom marquise engagement ring featuring a 6-prong setting with a fully diamond-paved halo, diamond prongs, and a hand-set diamond band for maximum brilliance and elegance. Crafted to enhance the elongated shape of the marquise center stone while delivering a bold yet timeless luxury look.",
+    specs: [
+      "Marquise Cut Center Stone",
+      "6-Prong Setting",
+      "Diamond Halo",
+      "Diamond Prongs",
+      "Diamond Band",
+      "Custom Handcrafted Design",
+      "Available in 14K, 18K, or Platinum",
+      "Available with Lab or Natural Diamond"
+    ]
+  },
+  {
+    id: "pink-oval-engagement-ring",
+    name: "Monarch Pink™ Diamond Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 1900,
+    image: "/assets/pink-oval-engagement-ring.jpeg",
+    alt: "Pink oval center stone engagement ring in black jewelry box",
+    description:
+      "A bold luxury statement centered around a vivid pink oval lab diamond, secured in a precision double eagle claw prong setting for maximum brilliance and presence. The elegant split shank design rises into the center stone while pave-set diamonds flow along the band and side profile, creating fire and detail from every angle. The Monarch Pink™ was designed for those who want rare color, feminine elegance, and a ring that commands attention without saying a word.",
+    specs: [
+      "Vivid Pink Oval Lab Diamond",
+      "Double Eagle Claw Prong Setting",
+      "Split Shank Design",
+      "Pave Diamond Band",
+      "Diamond Side Profile Accents",
+      "Hidden Luxury Detailing",
+      "Available in 14K Gold, 18K Gold, or Platinum",
+      "Available in White Gold, Yellow Gold, or Rose Gold",
+      "Made-To-Order Custom Build",
+      "IGI Certification Available",
+      "Appraisal Included"
+    ]
+  },
+  {
+    id: "yellow-oval-diamond-ring",
+    name: "Monarch Canary Oval Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 1900,
+    image: "/assets/yellow-oval-diamond-ring.jpeg",
+    alt: "Yellow oval diamond engagement ring with pave diamond band",
+    description:
+      "A bold take on timeless luxury. The Monarch Canary Oval Ring features a vivid canary yellow oval-cut diamond set in a classic four-prong setting with a fully diamond-accented band for maximum brilliance and elegance. Designed for those who appreciate rare color, clean craftsmanship, and refined detail. Available in 14K, 18K, or Platinum. Available in White, Yellow, or Rose Gold.",
+    specs: [
+      "Oval Cut Vivid Canary Yellow Diamond",
+      "Four-Prong Classic Setting",
+      "Diamond Pave Band",
+      "Available in Lab or Natural Diamond Options",
+      "Available in Multiple Carat Sizes",
+      "Custom Made to Order",
+      "IGI / GIA Certification Available",
+      "Appraisal Included with Purchase"
+    ]
+  },
+  {
+    id: "radiant-solitaire-engagement-ring",
+    name: "The Classic Radiant Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 2200,
+    image: "/assets/radiant-solitaire-engagement-ring.jpeg",
+    alt: "Radiant cut diamond solitaire engagement ring on a gold band",
+    description:
+      "A timeless radiant cut engagement ring designed with clean elegance and modern simplicity. The Classic Radiant Ring features a brilliant radiant cut center stone secured in a refined four-prong solitaire setting, allowing maximum light reflection and brilliance from every angle. Crafted for clients who appreciate understated luxury, this design keeps the focus entirely on the center stone while maintaining a sleek and balanced profile. A true staple piece built to remain timeless for generations. Clients can customize the center stone size, quality, shape, and metal color to create a fully personalized one-of-one piece. Available with lab-grown or natural diamonds and custom gemstone requests upon approval.",
+    specs: [
+      "Radiant Cut Center Stone",
+      "Classic Four Prong Solitaire Setting",
+      "High Polish Luxury Shank",
+      "Available Starting at 1 Carat Center Stone",
+      "Lab or Natural Diamond Options",
+      "Available in 14K, 18K, or Platinum",
+      "Yellow Gold, White Gold, or Rose Gold Options",
+      "Custom Stone Sizes Available",
+      "Custom Ring Sizing Available",
+      "Made To Order",
+      "IGI / GIA Certification Available",
+      "Appraisal Included"
+    ]
+  },
+  {
+    id: "emerald-accent-engagement-ring",
+    name: "Infinity Eclipse Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 1900,
+    image: "/assets/emerald-accent-engagement-ring.jpeg",
+    alt: "Round diamond engagement ring with green emerald accent stones",
+    description:
+      "A modern infinity-inspired engagement ring designed to symbolize forever. The Infinity Eclipse Ring features a round brilliant center stone paired with a flowing infinity-style band accented by customizable gemstones for a fully personalized luxury design. Not only can clients choose the shape and size of the center stone, but they can also fully customize the infinity band gemstone colors on demand. Options include Sapphire, Emerald, Ruby, Diamond, and other gemstone requests upon approval for a truly one-of-one creation. The center stone is also fully customizable and available in round, oval, radiant, emerald, cushion, princess, pear, marquise, and additional custom cuts. Crafted for clients who want luxury without limitations.",
+    specs: [
+      "Starting at 1 Carat Center Stone",
+      "Infinity Style Band Design",
+      "Custom Colored Gemstone Options",
+      "Sapphire, Emerald, Ruby, Diamond & Special Request Stones Available",
+      "Customizable Center Stone Shape",
+      "Available in Lab or Natural Diamonds",
+      "Available in 14K, 18K, or Platinum",
+      "Custom Sizing Available",
+      "Made To Order",
+      "IGI / GIA Certification Available",
+      "Appraisal Included"
+    ]
+  },
+  {
+    id: "imperial-bloom-engagement-ring",
+    name: "Imperial Bloom Engagement Ring",
+    vendorId: "don",
+    category: "engagement-rings",
+    basePrice: 1900,
+    image: "/assets/imperial-bloom-engagement-ring.jpeg",
+    alt: "Oval diamond engagement ring with floral diamond accents on a gold band",
+    description:
+      "A refined oval engagement ring featuring a timeless solitaire center stone accented by delicate floating floral diamond details along the band. Designed with a soft luxury aesthetic, this piece combines minimalist elegance with intricate craftsmanship for a romantic and sophisticated finish.",
+    specs: [
+      "Center Stone: Oval Cut Diamond",
+      "Setting Style: Classic Solitaire with Floral Accents",
+      "Prongs: Rounded Four-Prong Setting",
+      "Accent Stones: Round Brilliant Accent Diamonds",
+      "Band Style: Minimal Floral Cluster Design",
+      "Metal Options: 14K Gold, 18K Gold, or Platinum",
+      "Available Colors: Yellow Gold, White Gold, Rose Gold",
+      "Diamond Quality Options: VS / VVS",
+      "Diamond Color Options: D/E/F",
+      "Available in Lab or Natural Diamonds",
+      "Handmade & Made to Order",
+      "IGI or GIA Certification",
+      "Professional Jewelry Appraisal",
+      "Luxury Packaging",
+      "Custom Sizing Available"
+    ]
   },
   {
     id: "celeste-halo",
@@ -159,6 +302,26 @@ export const readyRing4662CaratModifiers = {
   "6 carat": 4200
 };
 
+export const radiantTaperedBaguetteCaratModifiers = {
+  "1 carat": 2200,
+  "1.5 carat": 2460,
+  "2 carat": 2720,
+  "2.5 carat": 2980,
+  "3 carat": 3240,
+  "3.5 carat": 3500,
+  "4 carat": 3760,
+  "4.5 carat": 4020,
+  "5 carat": 4280,
+  "5.5 carat": 4540,
+  "6 carat": 4800
+};
+
+function getCaratPriceMap(product) {
+  if (product?.id === "ready-engagement-ring-4662") return readyRing4662CaratModifiers;
+  if (product?.id === "luna-solitaire") return radiantTaperedBaguetteCaratModifiers;
+  return caratModifiers;
+}
+
 export const styleModifiers = {
   Stud: 0,
   Hoop: 250,
@@ -191,6 +354,82 @@ const categoryConfig = {
       ["carat", "Diamond Size", customizerOptions.diamondSizes],
       ["shape", "Stone Shape", ["Oval"]],
       ["color", "Diamond Color", customizerOptions.diamondColors],
+      ["clarity", "Clarity", customizerOptions.clarity],
+      ["metal", "Metal", customizerOptions.luxuryMetals],
+      ["size", "Ring Size", customizerOptions.ringSizes]
+    ]
+  },
+  "pink-oval-engagement-ring": {
+    label: "Monarch Pink™ Diamond Ring",
+    intro: "Select a diamond size, oval stone shape, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
+    previewCta: "Request Quote / Message Us",
+    customCta: "Message Us for Custom Design / Custom Stone Size",
+    summaryAria: "Live pink oval engagement ring selection summary",
+    sections: [
+      ["carat", "Diamond Size", customizerOptions.diamondSizes],
+      ["shape", "Stone Shape", ["Oval"]],
+      ["color", "Diamond Color", customizerOptions.diamondColors],
+      ["clarity", "Clarity", customizerOptions.clarity],
+      ["metal", "Metal", customizerOptions.luxuryMetals],
+      ["size", "Ring Size", customizerOptions.ringSizes]
+    ]
+  },
+  "yellow-oval-diamond-ring": {
+    label: "Monarch Canary Oval Ring",
+    intro: "Select a diamond size, oval stone shape, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
+    previewCta: "Request Quote / Message Us",
+    customCta: "Message Us for Custom Design / Custom Stone Size",
+    summaryAria: "Live yellow oval diamond ring selection summary",
+    sections: [
+      ["carat", "Diamond Size", customizerOptions.diamondSizes],
+      ["shape", "Stone Shape", ["Oval"]],
+      ["color", "Diamond Color", customizerOptions.diamondColors],
+      ["clarity", "Clarity", customizerOptions.clarity],
+      ["metal", "Metal", customizerOptions.luxuryMetals],
+      ["size", "Ring Size", customizerOptions.ringSizes]
+    ]
+  },
+  "radiant-solitaire-engagement-ring": {
+    label: "The Classic Radiant Ring",
+    intro: "Select a diamond size, radiant stone shape, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
+    previewCta: "Request Quote / Message Us",
+    customCta: "Message Us for Custom Design / Custom Stone Size",
+    summaryAria: "Live radiant solitaire engagement ring selection summary",
+    sections: [
+      ["carat", "Diamond Size", customizerOptions.diamondSizes],
+      ["shape", "Stone Shape", ["Radiant"]],
+      ["color", "Diamond Color", customizerOptions.diamondColors],
+      ["clarity", "Clarity", customizerOptions.clarity],
+      ["metal", "Metal", customizerOptions.luxuryMetals],
+      ["size", "Ring Size", customizerOptions.ringSizes]
+    ]
+  },
+  "emerald-accent-engagement-ring": {
+    label: "Infinity Eclipse Ring",
+    intro: "Select a center stone size, center stone shape, accent gemstone, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
+    previewCta: "Request Quote / Message Us",
+    customCta: "Message Us for Custom Design / Custom Stone Size",
+    summaryAria: "Live Infinity Eclipse Ring selection summary",
+    sections: [
+      ["carat", "Diamond Size", customizerOptions.diamondSizes],
+      ["shape", "Stone Shape", customizerOptions.stoneShapes],
+      ["accentStone", "Infinity Band Gemstone", ["Sapphire", "Emerald", "Ruby", "Diamond", "Special Request"]],
+      ["color", "Diamond Color", customizerOptions.diamondColors],
+      ["clarity", "Clarity", customizerOptions.clarity],
+      ["metal", "Metal", customizerOptions.luxuryMetals],
+      ["size", "Ring Size", customizerOptions.ringSizes]
+    ]
+  },
+  "imperial-bloom-engagement-ring": {
+    label: "Imperial Bloom Engagement Ring",
+    intro: "Select a diamond size, oval stone shape, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
+    previewCta: "Request Quote / Message Us",
+    customCta: "Message Us for Custom Design / Custom Stone Size",
+    summaryAria: "Live Imperial Bloom engagement ring selection summary",
+    sections: [
+      ["carat", "Diamond Size", customizerOptions.diamondSizes],
+      ["shape", "Stone Shape", ["Oval"]],
+      ["color", "Diamond Color", ["D", "E", "F"]],
       ["clarity", "Clarity", customizerOptions.clarity],
       ["metal", "Metal", customizerOptions.luxuryMetals],
       ["size", "Ring Size", customizerOptions.ringSizes]
@@ -317,8 +556,22 @@ export function getCategoryProducts(category) {
   return products.filter((product) => product.category === category);
 }
 
+function isMarquiseProduct(product) {
+  return /marquise/i.test(`${product?.id || ""} ${product?.name || ""} ${product?.description || ""}`);
+}
+
 export function getProductConfig(product) {
   if (categoryConfig[product.id]) return categoryConfig[product.id];
+  if (isMarquiseProduct(product) && ["engagement-rings", "wedding-bands"].includes(product.category)) {
+    const baseConfig = categoryConfig[product.category];
+    return {
+      ...baseConfig,
+      intro: "Select a diamond size, marquise stone shape, diamond color, clarity, metal, and exact ring size. Your luxury engagement ring summary updates instantly.",
+      sections: baseConfig.sections.map((section) => (
+        section[0] === "shape" ? ["shape", "Stone Shape", ["Marquise"]] : section
+      ))
+    };
+  }
   return categoryConfig[product.category] || categoryConfig["engagement-rings"];
 }
 
@@ -328,7 +581,7 @@ export function getCustomizerSections(product) {
 
 export function getOptionDetail(key, option, product = null) {
   if (key === "carat") {
-    const priceMap = product?.id === "ready-engagement-ring-4662" ? readyRing4662CaratModifiers : caratModifiers;
+    const priceMap = getCaratPriceMap(product);
     if (priceMap[option]) return formatCurrency(priceMap[option]);
   }
 
@@ -372,7 +625,7 @@ export function estimatePrice(product, selection) {
       String(selection.metal || "").startsWith("18K") ? 300 :
       selection.metal === "Platinum" ? 700 :
       0;
-    return (caratModifiers[selection.carat] || product.basePrice) + metalPremium;
+    return (getCaratPriceMap(product)[selection.carat] || product.basePrice) + metalPremium;
   }
 
   return (
