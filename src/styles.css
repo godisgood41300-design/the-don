@@ -95,17 +95,53 @@ img {
 }
 
 .brand-mark {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 58px;
+  height: 38px;
   color: var(--gold);
-  background: rgba(8, 7, 6, 0.78);
-  border: 1px solid rgba(200, 162, 74, 0.68);
-  border-radius: 50%;
+  background:
+    linear-gradient(180deg, rgba(255, 231, 151, 0.2), rgba(140, 107, 31, 0.08)),
+    #0d0b09;
+  border: 1px solid rgba(200, 162, 74, 0.72);
+  border-radius: 18px 18px 8px 8px;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 0.88rem;
   font-weight: 900;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 8px rgba(200, 162, 74, 0.35);
+  box-shadow:
+    inset 0 -10px 0 rgba(200, 162, 74, 0.12),
+    0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.brand-mark::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 72px;
+  height: 15px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(200, 162, 74, 0.72);
+  border-radius: 50%;
+  background:
+    linear-gradient(180deg, rgba(255, 231, 151, 0.16), rgba(8, 7, 6, 0.95)),
+    #0a0908;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.28);
+  z-index: -1;
+}
+
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 7px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(200, 162, 74, 0.78), transparent);
 }
 
 .brand strong,
@@ -1029,6 +1065,120 @@ dd {
   font-weight: 900;
 }
 
+.tennis-builder-info {
+  display: grid;
+  gap: 14px;
+  margin: 22px 0;
+  padding: 18px;
+  border: 1px solid rgba(214, 179, 95, 0.35);
+  border-radius: 8px;
+  background: #fffaf0;
+}
+
+.tennis-builder-info > div {
+  display: grid;
+  gap: 4px;
+}
+
+.tennis-builder-info p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.stone-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding-top: 8px;
+}
+
+.stone-preview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(24px * var(--stone-scale));
+  height: calc(24px * var(--stone-scale));
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(214, 179, 95, 0.65);
+  background: radial-gradient(circle at 35% 30%, #fff, #f5efe0 52%, #c8a64c);
+  color: #201a12;
+  font-size: 0.68rem;
+  font-weight: 900;
+  box-shadow: 0 8px 18px rgba(25, 20, 12, 0.14);
+}
+
+.stone-preview.selected {
+  outline: 3px solid rgba(214, 179, 95, 0.28);
+  border-color: var(--gold);
+}
+
+.tennis-request-section {
+  padding: clamp(42px, 6vw, 74px) clamp(18px, 5vw, 72px);
+  background: #fbf8f0;
+  border-top: 1px solid var(--line);
+}
+
+.tennis-request-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 34px);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.tennis-request-form label {
+  display: grid;
+  gap: 8px;
+  color: #4f473d;
+  font-weight: 850;
+}
+
+.tennis-request-form input,
+.tennis-request-form textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fffdfa;
+  color: var(--ink);
+  font: inherit;
+}
+
+.full-span,
+.tennis-request-form .button,
+.tennis-request-form .form-status {
+  grid-column: 1 / -1;
+}
+
+.form-status {
+  margin: 0;
+  color: var(--gold-dark);
+  font-weight: 850;
+}
+
+.custom-cta-panel {
+  max-width: 1050px;
+  margin: 22px auto 0;
+  padding: clamp(20px, 4vw, 32px);
+  border-radius: 8px;
+  background: var(--black);
+  color: white;
+}
+
+.custom-cta-panel h2 {
+  max-width: 780px;
+}
+
 .about-us {
   padding: clamp(42px, 6vw, 78px) clamp(18px, 5vw, 72px);
   background: var(--soft);
@@ -1162,7 +1312,8 @@ dd {
     grid-template-columns: 1fr;
   }
 
-  .custom-order-form {
+  .custom-order-form,
+  .tennis-request-form {
     grid-template-columns: 1fr;
   }
 

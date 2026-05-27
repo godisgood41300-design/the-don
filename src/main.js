@@ -10,6 +10,7 @@ const app = document.querySelector("#app");
 const cartKey = "nakama-gems-cart";
 const selectionKey = "nakama-gems-selection";
 const videoKey = "the-don-product-videos";
+const braceletRequestKey = "the-don-bracelet-requests";
 const contactPhone = "(484) 761-2008";
 const contactPhoneHref = "tel:+14847612008";
 const contactEmail = "Thedonjewelersandjewelry@gmail.com";
@@ -50,6 +51,14 @@ function setProductVideo(productId, url) {
     delete videos[productId];
   }
   localStorage.setItem(videoKey, JSON.stringify(videos));
+}
+
+function getBraceletRequests() {
+  return JSON.parse(localStorage.getItem(braceletRequestKey) || "[]");
+}
+
+function setBraceletRequests(requests) {
+  localStorage.setItem(braceletRequestKey, JSON.stringify(requests));
 }
 
 function youtubeEmbedUrl(url) {
@@ -343,10 +352,75 @@ function productPage(productId) {
       </div>
     </section>
     ${RingCustomizer(product, selection)}
+    ${product.id === "ever-band" ? tennisBraceletRequestSection(selection) : ""}
     ${diamondVideoSection(product)}
   `);
   bindCustomizer(product.id);
+  if (product.id === "ever-band") bindTennisBraceletForm(selection);
   bindVideoReplay();
+}
+
+function tennisBraceletRequestSection(selection) {
+  return `
+    <section class="tennis-request-section" id="tennis-bracelet-request">
+      <div class="section-heading">
+        <p class="eyebrow">Customer Request</p>
+        <h2>Submit your custom tennis bracelet request</h2>
+        <p>Pricing varies depending on diamond availability, market pricing, metal weight, and selected specifications. Once your custom request is submitted, our team will personally review your selections and contact you with final pricing.</p>
+      </div>
+      <form class="tennis-request-form" aria-label="Custom tennis bracelet request form">
+        <label>Name<input name="name" type="text" autocomplete="name" required /></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+        <label>Phone Number<input name="phone" type="tel" autocomplete="tel" required /></label>
+        <label>Bracelet Length<input name="braceletLength" type="text" value="${selection.size || "7 inches"}" required /></label>
+        <label>Metal Type<input name="metalType" type="text" value="${selection.metal || "14K Gold"}" required /></label>
+        <label>Stone Size Selection<input name="stoneSize" type="text" value="${selection.stoneSize || "10 pointers (0.10 ct)"}" required /></label>
+        <label>Total Carat Weight<input name="totalCarat" type="text" value="${selection.totalCarat || "5.5 CT"}" required /></label>
+        <label class="full-span">Notes / Custom Requests<textarea name="notes" rows="5" placeholder="Custom size, diamond upgrades, special stones, or one-of-one requests"></textarea></label>
+        <button class="button button-gold" type="submit">Submit Custom Request</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+      <div class="custom-cta-panel">
+        <p class="eyebrow">Need a fully custom build?</p>
+        <h2>Contact us for custom sizes, diamond upgrades, or one-of-one projects.</h2>
+        <a class="button button-light" href="#/custom-orders">Request Custom Design</a>
+      </div>
+    </section>
+  `;
+}
+
+function bindTennisBraceletForm(selection) {
+  const form = document.querySelector(".tennis-request-form");
+  if (!form) return;
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    const request = {
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      product: "Custom Tennis Bracelet Builder",
+      selection,
+      customer: data
+    };
+    setBraceletRequests([...getBraceletRequests(), request]);
+
+    const body = [
+      "Custom Tennis Bracelet Request",
+      "",
+      `Name: ${data.name}`,
+      `Email: ${data.email}`,
+      `Phone: ${data.phone}`,
+      `Bracelet Length: ${data.braceletLength}`,
+      `Metal Type: ${data.metalType}`,
+      `Stone Size Selection: ${data.stoneSize}`,
+      `Total Carat Weight: ${data.totalCarat}`,
+      `Notes / Custom Requests: ${data.notes || "None"}`
+    ].join("\n");
+    const mailto = `${contactEmailHref}?subject=${encodeURIComponent("Custom Tennis Bracelet Request")}&body=${encodeURIComponent(body)}`;
+    form.querySelector(".form-status").textContent = "Request received. Your selections were saved and your email app will open so the request can be sent directly.";
+    window.location.href = mailto;
+  });
 }
 
 function bindCustomizer(productId) {

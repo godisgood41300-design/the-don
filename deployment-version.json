@@ -1,5 +1,5 @@
 {
-  "version": "v83-imperial-bloom-ring",
+  "version": "v85-fedora-sidebar-logo",
   "updated": "2026-05-25",
   "includes": [
     "Classic Oval Engagement Ring product",
@@ -11,7 +11,9 @@
     "The Classic Radiant Ring product and description",
     "Infinity Eclipse Ring product and description",
     "Imperial Bloom Engagement Ring product and description",
+    "Custom Tennis Bracelet Builder",
+    "Fedora TD sidebar logo",
     "Public product pages hide admin video controls"
   ],
-  "renderCheck": "If the live footer does not show 'Updated Render build v83 - Imperial Bloom ring included', Render is still serving an older deploy or the GitHub files were uploaded into the wrong folder."
+  "renderCheck": "If the live footer does not show 'Updated Render build v85 - fedora logo and tennis bracelet builder included', Render is still serving an older deploy or the GitHub files were uploaded into the wrong folder."
 }

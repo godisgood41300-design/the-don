@@ -217,12 +217,14 @@ export const products = [
   },
   {
     id: "ever-band",
-    name: "Diamond Tennis Bracelet",
+    name: "Custom Tennis Bracelet Builder",
     vendorId: "don",
     category: "bracelets",
-    basePrice: 1350,
+    basePrice: 5500,
     image: "/assets/diamond-bracelet.png",
-    alt: "Diamond tennis bracelet displayed on a white glove"
+    alt: "Diamond tennis bracelet displayed on a white glove",
+    description:
+      "Build a custom tennis bracelet with selectable metal, stone size, total carat weight, and bracelet length. Each request is personally reviewed for diamond availability, market pricing, finished metal weight, and custom sizing before final quote confirmation."
   }
 ];
 
@@ -258,6 +260,10 @@ export const customizerOptions = {
   necklaceSizes: ["16 in", "18 in", "20 in", "22 in", "24 in"],
   chainSizes: ["18 in", "20 in", "22 in", "24 in", "26 in", "30 in"],
   braceletSizes: ["6 in", "6.5 in", "7 in", "7.5 in", "8 in", "8.5 in"],
+  tennisBraceletLengths: ["7 inches", "6 inches", "6.5 inches", "7.5 inches", "8 inches", "Custom Length"],
+  tennisBraceletMetals: ["14K Gold", "18K Gold", "White Gold", "Yellow Gold", "Rose Gold"],
+  tennisStoneSizes: ["10 pointers (0.10 ct)", "15 pointers (0.15 ct)", "20 pointers (0.20 ct)", "25 pointers (0.25 ct)", "30 pointers (0.30 ct)", "35 pointers (0.35 ct)", "40 pointers (0.40 ct)"],
+  tennisTotalCarats: ["5.5 CT", "10.5 CT", "15.5 CT", "20.5 CT", "25.5 CT", "30.5 CT", "35.5 CT", "40.5 CT"],
   necklaceTypes: ["Pendant", "Halo Pendant", "Tennis", "Choker", "Layered"],
   chainTypes: ["Rope", "Cuban", "Tennis", "Box", "Figaro"],
   braceletTypes: ["Tennis", "Bangle", "Cuff", "Link", "Charm"]
@@ -314,6 +320,17 @@ export const radiantTaperedBaguetteCaratModifiers = {
   "5 carat": 4280,
   "5.5 carat": 4540,
   "6 carat": 4800
+};
+
+export const tennisBraceletCaratPrices = {
+  "5.5 CT": 5500,
+  "10.5 CT": 6350,
+  "15.5 CT": 7200,
+  "20.5 CT": 8050,
+  "25.5 CT": 8900,
+  "30.5 CT": 9750,
+  "35.5 CT": 10600,
+  "40.5 CT": 11450
 };
 
 function getCaratPriceMap(product) {
@@ -433,6 +450,19 @@ const categoryConfig = {
       ["clarity", "Clarity", customizerOptions.clarity],
       ["metal", "Metal", customizerOptions.luxuryMetals],
       ["size", "Ring Size", customizerOptions.ringSizes]
+    ]
+  },
+  "ever-band": {
+    label: "Custom Tennis Bracelet Builder",
+    intro: "Build a 7 inch custom tennis bracelet by selecting metal, per-stone size, total carat weight, and bracelet length. Your selections and estimated price update instantly.",
+    previewCta: "Submit Custom Request",
+    customCta: "Request Custom Design",
+    summaryAria: "Live custom tennis bracelet selection summary",
+    sections: [
+      ["size", "Bracelet Length", customizerOptions.tennisBraceletLengths],
+      ["metal", "Metal Type", customizerOptions.tennisBraceletMetals],
+      ["stoneSize", "Stone Size Selection", customizerOptions.tennisStoneSizes],
+      ["totalCarat", "Total Carat Weight", customizerOptions.tennisTotalCarats]
     ]
   },
   "engagement-rings": {
@@ -580,6 +610,10 @@ export function getCustomizerSections(product) {
 }
 
 export function getOptionDetail(key, option, product = null) {
+  if (product?.id === "ever-band" && key === "totalCarat") {
+    return formatCurrency(tennisBraceletCaratPrices[option] || product.basePrice);
+  }
+
   if (key === "carat") {
     const priceMap = getCaratPriceMap(product);
     if (priceMap[option]) return formatCurrency(priceMap[option]);
@@ -612,6 +646,10 @@ export function formatCurrency(amount) {
 }
 
 export function estimatePrice(product, selection) {
+  if (product.id === "ever-band") {
+    return tennisBraceletCaratPrices[selection.totalCarat] || product.basePrice;
+  }
+
   if (product.id === "ready-engagement-ring-4662") {
     const metalPremium =
       String(selection.metal || "").startsWith("18K") ? 300 :

@@ -16,7 +16,7 @@ export function Footer() {
         <a href="#/checkout">Checkout</a>
         <a href="#/terms">Terms and Conditions</a>
         <a href="https://peoplesartist.org/2026/carlos-gonzalez">People's Artist</a>
-        <span class="deploy-version">Updated Render build v83 - Imperial Bloom ring included</span>
+        <span class="deploy-version">Updated Render build v85 - fedora logo and tennis bracelet builder included</span>
       </div>
     </footer>
   `;

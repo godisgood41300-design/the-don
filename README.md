@@ -26,12 +26,12 @@ node server.js
 
 Recommended path: push this folder to a GitHub repository, then connect that repo to Vercel or Render.
 
-Current deployment package marker: `v83-imperial-bloom-ring`.
+Current deployment package marker: `v85-fedora-sidebar-logo`.
 
 After deploying, check the live footer. It should say:
 
 ```text
-Updated Render build v83 - Imperial Bloom ring included
+Updated Render build v85 - fedora logo and tennis bracelet builder included
 ```
 
 If it does not, Render is still serving an older deploy, or the project files were uploaded into a nested folder instead of the repository root.
